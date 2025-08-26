@@ -166,6 +166,7 @@
   <p><a href="https://www.cvv.org.br/188/">Se você estiver em risco ou em crise, ligue 188 (CVV – Brasil, 24h)</a> ou procure o SAMU/UPA mais próxima.</p>
 </footer>
 
+<script src="https://js.puter.com/v2/"></script>
 <script>
   // Função para alternar a exibição das técnicas rápidas
   document.querySelectorAll('.technique').forEach(item => {
@@ -182,7 +183,10 @@
       document.getElementById('chat-output').innerHTML += `<p><strong>Você:</strong> ${userInput}</p>`;
       document.getElementById('user-input').value = '';
       // Chamada à API do chatbot (substitua com a implementação real)
-      document.getElementById('chat-output').innerHTML += `<p><strong>IA:</strong> Estou aqui para ouvir você. Como posso ajudar?</p>`;
+      puter.ai.chat(userInput, { model: 'gpt-4.1-nano' })
+        .then(response => {
+          document.getElementById('chat-output').innerHTML += `<p><strong>IA:</strong> ${response}</p>`;
+        });
     }
   });
 </script>
