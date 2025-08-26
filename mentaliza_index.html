@@ -1,0 +1,238 @@
+<!--
+Arquivo: mentaliza_index.html
+Descrição: Página única (static) para o projeto Mentaliza — versão gratuita "site + chatbot IA".
+Instruções rápidas antes de publicar:
+ 1) Crie as contas/recursos gratuitos que serão embutidos (Notion public page, Typebot flow, Hugging Face Space para chat IA ou outro chat gratuito, Google Form para feedback).
+ 2) Substitua os valores das constantes (NOTION_URL, TYPEBOT_EMBED, SPACE_EMBED, GOOGLE_FORM_URL) no script abaixo com os links públicos gerados por cada serviço.
+ 3) Publique no GitHub Pages: crie um repositório, adicione este arquivo como index.html na branch main e ative Pages (Settings → Pages → Branch: main / folder: /root).
+
+O arquivo já inclui:
+ - Header com marca Mentaliza
+ - Seções: Recursos, Exercícios, Ajuda em Crise, Contato
+ - Área do chatbot com duas camadas: 1) triagem (botões) e 2) chat IA embutido via iframe (Hugging Face Space ou similar)
+ - Fallback JS: chat local simples + detector de risco (palavras-chave)
+ - Banner de crise fixo
+ - Rodapé com aviso legal
+
+OBS: Este projeto é 100% baseado em ferramentas gratuitas — o arquivo em si é estático e não cria contas externas por você. Para o chat IA gratuito, recomendo criar um Hugging Face Space Gradio com um modelo pequeno (ou usar um modelo em Transformers.js / WebLLM se preferir rodar localmente).
+-->
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mentaliza — Orientação em Saúde Mental</title>
+  <style>
+    :root{--accent:#5b6ef5;--bg:#f7f8fc;--card:#ffffff;--muted:#666}
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0;background:var(--bg);color:#111}
+    header{background:linear-gradient(90deg,var(--accent),#7bb7ff);color:white;padding:28px 20px}
+    .container{max-width:980px;margin:24px auto;padding:0 16px}
+    h1{margin:0;font-size:28px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(32,40,60,0.06)}
+    .chat-area{height:520px;display:flex;flex-direction:column}
+    .chat-iframe{flex:1;border:0;border-radius:8px}
+    .triage{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#eef3ff;color:var(--accent);border:1px solid rgba(91,110,245,0.12)}
+    .resource-list{display:flex;flex-direction:column;gap:8px}
+    footer{padding:18px 0;color:var(--muted);text-align:center;font-size:14px}
+    .crisis-banner{background:#ffefef;border-left:4px solid #ff6b6b;padding:10px 12px;border-radius:8px;margin-bottom:12px}
+    .hidden{display:none}
+    @media(max-width:960px){.grid{grid-template-columns:1fr;}.chat-area{height:420px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Mentaliza</h1>
+      <p style="margin-top:6px;opacity:.95">Orientação em saúde mental no trabalho — versão gratuita (site + chatbot)</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <!-- Left column: content -->
+      <div>
+        <div class="card">
+          <h2>Recursos</h2>
+          <p>Artigos, vídeos e exercícios para bem-estar no trabalho. Substitua os links abaixo pelas suas páginas do Notion ou URLs públicas.</p>
+          <div class="resource-list">
+            <a href="#" id="res1">• Exercício de respiração (5 min)</a>
+            <a href="#" id="res2">• Rápidas estratégias para foco</a>
+            <a href="#" id="res3">• Higiene do sono para turnos</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Exercícios guiados</h2>
+          <ol>
+            <li>Respire 4 segundos — segure 4 — solte 6 (3 ciclos)</li>
+            <li>Pausa de 2 minutos: alongamento de pescoço e ombros</li>
+            <li>Exercício de foco: 25 min trabalho + 5 min pausa (Pomodoro)</li>
+          </ol>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Ajuda em crise</h2>
+          <div class="crisis-banner">
+            <strong>Se estiver em risco ou em crise, ligue 188 (CVV — Brasil, 24h)</strong><br>
+            Procure atendimento médico de emergência (SAMU / UPA) se houver risco imediato.
+          </div>
+          <p>Este serviço é educativo e não substitui atendimento profissional.</p>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Coleta de feedback</h2>
+          <p>Link do formulário anônimo — substitua pela URL do seu Google Form.</p>
+          <a href="#" id="form-link">Abrir formulário anônimo</a>
+        </div>
+      </div>
+
+      <!-- Right column: Chat + triage -->
+      <aside>
+        <div class="card chat-area">
+          <div>
+            <h3 style="margin:0 0 8px 0">MentalizaBot</h3>
+            <p style="margin:0 0 12px 0;color:var(--muted)">Converse de forma anônima — para questões graves, o sistema dará orientações de segurança.</p>
+          </div>
+
+          <div class="triage" id="triage">
+            <button onclick="startTriage('dicas')">Quero dicas rápidas</button>
+            <button onclick="startTriage('sobrecarregado')" class="secondary">Estou me sentindo sobrecarregado(a)</button>
+            <button onclick="startTriage('crise')" class="secondary">Preciso de ajuda agora</button>
+            <small style="color:var(--muted)">Ou digite sua mensagem abaixo e pressione Enviar.</small>
+          </div>
+
+          <!-- Chat iframe area (embed external chat IA here) -->
+          <div id="iframeWrapper" style="flex:1;display:flex;flex-direction:column">
+            <!-- Replace SPACE_EMBED_URL with your Hugging Face Space / embeddable chat link -->
+            <iframe id="chatIframe" class="chat-iframe" srcdoc="<p style='padding:16px;font-family:Inter'>Chat externo ausente — substitua o embed na configuração.</p>" title="Chat IA embutido"></iframe>
+          </div>
+
+          <!-- Fallback local chat UI -->
+          <div id="localChat" class="hidden" style="margin-top:10px">
+            <div id="chatLog" style="height:180px;overflow:auto;padding:8px;border:1px solid #eee;border-radius:8px;background:#fbfbff"></div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <input id="userInput" placeholder="Escreva aqui..." style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd" />
+              <button onclick="sendLocal()">Enviar</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4>Segurança</h4>
+          <p style="margin:0;color:var(--muted)">Se detectarmos palavras relacionadas a crise, você verá instruções imediatas para buscar ajuda profissional.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer style="margin-top:18px">
+      <div class="card" style="padding:12px">
+        <small>
+          <strong>Aviso:</strong> O Mentaliza é um serviço educativo e preventivo. Não substitui atendimento psicológico ou psiquiátrico. Em risco, ligue 188 (CVV — Brasil) ou procure atendimento de emergência.
+        </small>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // === CONFIGURE AQUI com os seus links públicos ===
+    const NOTION_URL = '' // ex: 'https://www.notion.so/sua-pagina-publica'
+    const TYPEBOT_EMBED = '' // ex: 'https://embed.typebot.io/your-flow-id'
+    const SPACE_EMBED = '' // ex: 'https://huggingface.co/spaces/username/yourspace/embed'
+    const GOOGLE_FORM_URL = '' // ex: 'https://docs.google.com/forms/d/e/yourform/viewform?embedded=true'
+
+    // === não altere abaixo, a menos que saiba o que faz ===
+    // Preencha links visuais
+    document.getElementById('form-link').href = GOOGLE_FORM_URL || '#'
+    document.getElementById('res1').href = NOTION_URL || '#'
+    document.getElementById('res2').href = NOTION_URL || '#'
+    document.getElementById('res3').href = NOTION_URL || '#'
+
+    // If user provided a Typebot embed or Space embed, use them. Otherwise show local fallback chat.
+    const chatIframe = document.getElementById('chatIframe')
+    function setEmbeds(){
+      if (SPACE_EMBED){
+        // Many Hugging Face Spaces support /embed or can be iframed directly
+        chatIframe.src = SPACE_EMBED
+      } else if (TYPEBOT_EMBED){
+        chatIframe.src = TYPEBOT_EMBED
+      } else {
+        // Show local chat fallback
+        chatIframe.remove()
+        document.getElementById('localChat').classList.remove('hidden')
+      }
+    }
+    setEmbeds()
+
+    // Simple triage handler
+    function startTriage(type){
+      if (type === 'dicas'){
+        openResource(NOTION_URL || '#')
+        appendLocalMessage('Sistema', 'Aqui vão algumas dicas rápidas: 1) Respire profundamente por 3 ciclos; 2) Pausa de 5 minutos a cada 25 minutos; 3) Evite telas 30 minutos antes de dormir.')
+      } else if (type === 'sobrecarregado'){
+        appendLocalMessage('Sistema', 'Sinto que você está sobrecarregado(a). Experimente: dividir tarefas pequenas, priorizar e comunicar seu gestor. Quer que eu sugira um exercício de respiração?')
+      } else if (type === 'crise'){
+        showCrisis()
+      }
+    }
+
+    function openResource(url){ if(url && url!=='#') window.open(url,'_blank') }
+
+    // === Fallback chat + simple risk detection ===
+    const riskWords = ['suicídio','suicidio','me matar','matar-me','me machucar','acabar com minha vida','quero morrer','não quero mais viver','fazer mal a mim']
+    function detectRisk(text){
+      const t = text.toLowerCase()
+      return riskWords.some(w => t.includes(w))
+    }
+
+    function appendLocalMessage(who, text){
+      const log = document.getElementById('chatLog')
+      if(!log) return
+      const el = document.createElement('div')
+      el.style.padding='6px 8px'
+      el.style.marginBottom='6px'
+      el.style.borderRadius='8px'
+      el.style.background = who==='Você' ? '#eef3ff' : '#fff'
+      el.innerHTML = `<strong>${who}:</strong> ${text}`
+      log.appendChild(el)
+      log.scrollTop = log.scrollHeight
+    }
+
+    function sendLocal(){
+      const input = document.getElementById('userInput')
+      const text = (input.value||'').trim()
+      if(!text) return
+      appendLocalMessage('Você', text)
+      input.value = ''
+      if (detectRisk(text)){
+        showCrisis()
+        return
+      }
+      // Simple canned responses (fallback). You can expand these or integrate with WebLLM/Transformers.js in-page.
+      const lower = text.toLowerCase()
+      if (lower.includes('ansiedade') || lower.includes('ansioso') || lower.includes('ansiosa')){
+        appendLocalMessage('Mentaliza', 'Respire devagar: inspire 4s, segure 4s, expire 6s. Faça 3 ciclos e me diga como se sente.')
+      } else if (lower.includes('dormir') || lower.includes('sono')){
+        appendLocalMessage('Mentaliza', 'Tente reduzir telas 30 minutos antes e criar uma rotina de sono consistente. Evite cafeína após 16h.')
+      } else {
+        appendLocalMessage('Mentaliza', 'Entendi. Posso sugerir uma técnica curta de respiração ou direcionar para um vídeo. O que prefere?')
+      }
+    }
+
+    function showCrisis(){
+      // Show immediate crisis message and block further automated advice
+      alert('Se você está em risco imediato, ligue 188 (CVV — Brasil) agora. Procure atendimento de emergência (SAMU/UPA).')
+      appendLocalMessage('Mentaliza', '<strong>Priorize sua segurança.</strong> Ligue 188 (CVV — Brasil) para conversar com alguém agora. Se houver risco imediato, procure o SAMU/UPA ou vá ao pronto-socorro mais próximo.')
+    }
+
+    // Small usability: open local chat if no embeds
+    if(!SPACE_EMBED && !TYPEBOT_EMBED){
+      document.getElementById('localChat').classList.remove('hidden')
+    }
+  </script>
+</body>
+</html>
