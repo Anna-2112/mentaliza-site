@@ -36,8 +36,14 @@
 
   <section id="chatbot" class="chatbot">
     <h2>💬 Converse com o MentalizaBot</h2>
-    <p>[Aqui entraria a integração do chatbot]</p>
-  </section>
+  
+ <section id="chatIA" class="chatbot">
+  <h2>💬 Chat IA</h2>
+  <div id="chatIAlog" style="height:300px; overflow:auto; padding:10px; border:1px solid #ccc; border-radius:8px; background:#fafafa;"></div>
+  <input id="chatIAinput" placeholder="Escreva aqui..." style="width:70%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+  <button onclick="sendIA()">Enviar</button>
+</section>
+
 
   <section id="tecnicas" class="tecnicas">
     <h2>⚡ Técnicas Rápidas</h2>
@@ -66,6 +72,45 @@
   <footer>
     <p>Mentaliza © 2025 - Todos os direitos reservados</p>
   </footer>
+<script type="module">
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js';
+
+let generator;
+
+// 1️⃣ Carregar modelo leve
+async function loadModel() {
+  generator = await pipeline('text-generation', 'Xenova/gpt2'); 
+  appendIA('Sistema', 'Olá! Eu sou o MentalizaBot IA. Posso te oferecer dicas educativas e acolhedoras sobre bem-estar. Em risco, ligue 188.');
+}
+loadModel();
+
+// 2️⃣ Função para mostrar mensagens no chat
+function appendIA(sender, text) {
+  const log = document.getElementById('chatIAlog');
+  const msg = document.createElement('div');
+  msg.style.padding = '6px';
+  msg.style.marginBottom = '6px';
+  msg.style.borderRadius = '6px';
+  msg.style.background = sender==='Você' ? '#e0f7fa' : '#fff';
+  msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  log.appendChild(msg);
+  log.scrollTop = log.scrollHeight;
+}
+
+// 3️⃣ Função enviar mensagem
+async function sendIA() {
+  const input = document.getElementById('chatIAinput');
+  const text = input.value.trim();
+  if(!text) return;
+  appendIA('Você', text);
+  input.value = '';
+
+  const prompt = `Você é um assistente acolhedor e educativo, nunca faz diagnóstico. Sempre redireciona para ajuda em crise. Usuário: "${text}" Responda educadamente.`;
+
+  const output = await generator(prompt, { max_length: 100 });
+  appendIA('MentalizaBot', output[0].generated_text.replace(prompt, '').trim());
+}
+</script>
 
 </body>
 </html>
