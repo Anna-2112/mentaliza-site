@@ -3,289 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentaliza - Chat IA</title>
+  <title>Mentaliza - Chat IA Avançado</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
 
   <style>
-    /* Fonte e cores gerais */
-    body {
-      font-family: 'Open Sans', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #F0F8FF;
-      color: #333;
-    }
-
-    /* Header */
-    header {
-      background: linear-gradient(90deg, #A7C7E7, #A8E6CF);
-      color: white;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      font-family: 'Merriweather', serif;
-      font-size: 2.8em;
-      margin: 0;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1em;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* Seções */
-    section {
-      padding: 40px 20px;
-      margin: 20px auto;
-      border-radius: 15px;
-      max-width: 900px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      background: #FFFFFF;
-      transition: transform 0.3s;
-    }
-
-    section:hover {
-      transform: translateY(-5px);
-    }
-
-    h2 {
-      font-family: 'Merriweather', serif;
-      font-size: 2em;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    /* Cards */
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .card {
-      flex: 1 1 220px;
-      background: linear-gradient(135deg, #A8E6CF, #E1BEE7);
-      padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-      font-weight: bold;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Botões e inputs */
-    button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
-    }
-
-    input {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 70%;
-      margin-right: 10px;
-    }
-
-    /* Chat IA log */
-    #chatIAlog {
-      height: 250px;
-      overflow-y: auto;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #f7f7f7;
-      margin-bottom: 10px;
-    }
-
-    /* Iframes de vídeo */
-    iframe {
-      width: 100%;
-      height: 280px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    /* Alert */
-    .alert {
-      background-color: #FFEB3B;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-weight: bold;
-      text-align: center;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-      100% { transform: scale(1); }
-    }
-
-    /* Footer */
-    footer {
-      background-color: #A7C7E7;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .cards {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      input {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-    }
+    body { font-family: 'Open Sans', sans-serif; margin:0; padding:0; background:#F0F8FF; color:#333; }
+    header { background: linear-gradient(90deg,#A7C7E7,#A8E6CF); color:white; padding:25px; text-align:center; }
+    header h1 { font-family:'Merriweather', serif; font-size:2.8em; margin:0; }
+    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    section { padding:40px 20px; margin:20px auto; border-radius:15px; max-width:900px; box-shadow:0 4px 8px rgba(0,0,0,0.1); background:#FFFFFF; }
+    h2 { font-family:'Merriweather', serif; font-size:2em; margin-bottom:20px; }
+    #chatIAlog { height:250px; overflow-y:auto; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f7f7f7; margin-bottom:10px; }
+    input { padding:10px; border-radius:8px; border:1px solid #ccc; width:70%; margin-right:10px; }
+    button { padding:10px 16px; border:none; border-radius:8px; background-color:#4CAF50; color:white; cursor:pointer; font-weight:bold; transition:0.2s; }
+    button:hover { background-color:#45a049; transform:scale(1.05); }
+    .cards { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+    .card { flex:1 1 220px; background:linear-gradient(135deg,#A8E6CF,#E1BEE7); padding:15px; border-radius:12px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1); font-weight:bold; transition:0.3s; cursor:pointer; }
+    .card:hover { transform:translateY(-5px); }
+    iframe { width:100%; height:280px; border-radius:10px; margin-top:10px; }
+    .alert { background:#FFEB3B; padding:15px; border-radius:8px; margin-top:20px; font-weight:bold; text-align:center; }
+    footer { background:#A7C7E7; color:white; text-align:center; padding:15px; margin-top:40px; }
+    .typing { font-style: italic; color: #777; margin-bottom:6px; }
+    .fadeIn { animation: fadeIn 0.5s ease forwards; opacity:0; }
+    @keyframes fadeIn { to { opacity:1; } }
+    @media(max-width:768px){.cards{flex-direction:column;align-items:center;} input{width:100%;margin-bottom:10px;}}
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>Mentaliza 💚</h1>
-    <nav>
-      <a href="#chatIA">Chat IA</a>
-      <a href="#tecnicas">Técnicas</a>
-      <a href="#videos">Vídeos</a>
-    </nav>
-  </header>
+<header>
+  <h1>Mentaliza 💚</h1>
+  <nav>
+    <a href="#chatIA">Chat IA</a>
+    <a href="#tecnicas">Técnicas</a>
+    <a href="#videos">Vídeos</a>
+  </nav>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h2>Bem-vindo ao Mentaliza</h2>
-    <p>Seu espaço de apoio emocional e bem-estar. Converse com nosso chatbot IA, veja técnicas rápidas e vídeos educativos.</p>
-    <a href="#chatIA"><button>Começar Chat IA</button></a>
-  </section>
+<section class="hero">
+  <h2>Bem-vindo ao Mentaliza</h2>
+  <p>Converse com nosso chatbot IA avançado, veja técnicas rápidas e vídeos educativos.</p>
+  <a href="#chatIA"><button>Começar Chat IA</button></a>
+</section>
 
-  <!-- CHAT IA -->
-  <section id="chatIA">
-    <h2>🤖 Chat IA</h2>
-    <div id="chatIAlog"></div>
-    <input id="chatIAinput" placeholder="Escreva aqui...">
-    <button onclick="sendIA()">Enviar</button>
-  </section>
+<section id="chatIA">
+  <h2>🤖 Chat IA</h2>
+  <div id="chatIAlog"></div>
+  <input id="chatIAinput" placeholder="Escreva aqui...">
+  <button onclick="sendIA()">Enviar</button>
+  <div style="margin-top:10px;">
+    <button onclick="quickQuestion('Estou estressado')">Estou estressado</button>
+    <button onclick="quickQuestion('Quero melhorar meu foco')">Melhorar foco</button>
+    <button onclick="quickQuestion('Preciso dormir melhor')">Sono melhor</button>
+    <button onclick="quickQuestion('Preciso de ajuda agora')">Ajuda imediata</button>
+  </div>
+</section>
 
-  <!-- TÉCNICAS RÁPIDAS -->
-  <section id="tecnicas">
-    <h2>⚡ Técnicas Rápidas</h2>
-    <div class="cards">
-      <div class="card">Respiração 4-7-8</div>
-      <div class="card">Alongamento de 5 min</div>
-      <div class="card">Pausa consciente</div>
-      <div class="card">Anotação de pensamentos</div>
-      <div class="card">Mini meditação guiada</div>
+<section id="tecnicas">
+  <h2>⚡ Técnicas Rápidas</h2>
+  <div class="cards">
+    <div class="card" onclick="alert('Respire contando: inspire 4s, segure 7s, expire 8s.')">Respiração 4-7-8</div>
+    <div class="card" onclick="alert('Alongue braços, pescoço e costas por 5 minutos.')">Alongamento de 5 min</div>
+    <div class="card" onclick="alert('Faça pausa de 1-2 minutos, respire e relaxe.')">Pausa consciente</div>
+    <div class="card" onclick="alert('Anote pensamentos e sentimentos rapidamente.')">Anotação de pensamentos</div>
+    <div class="card" onclick="alert('Faça mini meditação guiada de 3 minutos.')">Mini meditação guiada</div>
+  </div>
+</section>
+
+<section id="videos">
+  <h2>🎥 Vídeos Recomendados</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Meditação Guiada Iniciantes</h3>
+      <iframe src="https://www.youtube.com/embed/1ZYbU82GVz4" allowfullscreen></iframe>
     </div>
-  </section>
-
-  <!-- VÍDEOS EM PORTUGUÊS -->
-  <section id="videos">
-    <h2>🎥 Vídeos Recomendados</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Meditação Guiada Iniciantes</h3>
-        <iframe src="https://www.youtube.com/embed/1ZYbU82GVz4" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>Respiração para Redução de Estresse</h3>
-        <iframe src="https://www.youtube.com/embed/SEfs5TJZ2J4" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>Como Lidar com a Ansiedade</h3>
-        <iframe src="https://www.youtube.com/embed/0V9tQ8J7eYg" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>Mindfulness e Foco</h3>
-        <iframe src="https://www.youtube.com/embed/ZVb0tb2Ivk4" allowfullscreen></iframe>
-      </div>
-      <div class="card">
-        <h3>Pausas e Alongamento</h3>
-        <iframe src="https://www.youtube.com/embed/2o6z6OJ9Ruo" allowfullscreen></iframe>
-      </div>
+    <div class="card">
+      <h3>Respiração para Redução de Estresse</h3>
+      <iframe src="https://www.youtube.com/embed/SEfs5TJZ2J4" allowfullscreen></iframe>
     </div>
-  </section>
+    <div class="card">
+      <h3>Como Lidar com a Ansiedade</h3>
+      <iframe src="https://www.youtube.com/embed/0V9tQ8J7eYg" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
 
-  <!-- AVISO -->
-  <section class="alert">
-    Este site oferece informações e recursos para apoio emocional. Não substitui acompanhamento profissional. Em caso de crise, procure ajuda especializada imediatamente (CVV 188 no Brasil).
-  </section>
+<section class="alert">
+  Este site oferece informações para apoio emocional. Não substitui acompanhamento profissional. Em caso de crise, ligue 188 (CVV - Brasil).
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 Mentaliza - Todos os direitos reservados</p>
-  </footer>
+<footer>
+  <p>&copy; 2025 Mentaliza - Todos os direitos reservados</p>
+</footer>
 
-  <!-- SCRIPT CHAT IA -->
-  <script type="module">
-    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js';
-    let generator;
+<script type="module">
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js';
 
-    async function loadModel() {
-      generator = await pipeline('text-generation', 'Xenova/gpt2'); 
-      appendIA('Sistema', 'Olá! Eu sou o MentalizaBot IA. Posso oferecer dicas educativas e acolhedoras sobre bem-estar. Em risco, ligue 188.');
-    }
-    loadModel();
+let generator;
+let modelLoaded = false;
+let chatHistory = []; // últimas 5 mensagens
 
-    function appendIA(sender, text) {
-      const log = document.getElementById('chatIAlog');
-      const msg = document.createElement('div');
-      msg.style.padding = '6px';
-      msg.style.marginBottom = '6px';
-      msg.style.borderRadius = '6px';
-      msg.style.background = sender==='Você' ? '#e0f7fa' : '#fff';
-      msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
-      log.appendChild(msg);
-      log.scrollTop = log.scrollHeight;
-    }
+async function loadModel(){
+  generator = await pipeline('text-generation', 'Xenova/gpt2', { quantized:true });
+  modelLoaded = true;
+  appendIA('Sistema','Olá! Eu sou o MentalizaBot IA. Posso oferecer dicas educativas e acolhedoras sobre bem-estar. Em risco, ligue 188.');
+}
+loadModel();
 
-    async function sendIA() {
-      const input = document.getElementById('chatIAinput');
-      const text = input.value.trim();
-      if(!text) return;
-      appendIA('Você', text);
-      input.value = '';
+function appendIA(sender, text, typing=false){
+  const log = document.getElementById('chatIAlog');
+  const msg = document.createElement('div');
+  msg.className = 'fadeIn';
+  msg.style.padding='6px';
+  msg.style.marginBottom='6px';
+  msg.style.borderRadius='6px';
+  msg.style.background = sender==='Você' ? '#e0f7fa' : '#fff';
+  msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  log.appendChild(msg);
+  log.scrollTop = log.scrollHeight;
+}
 
-      const prompt = `Você é um assistente acolhedor e educativo, nunca faz diagnóstico. Sempre redireciona para ajuda em crise. Usuário: "${text}" Responda educadamente.`;
-      const output = await generator(prompt, { max_length: 100 });
-      appendIA('MentalizaBot', output[0].generated_text.replace(prompt,'').trim());
-    }
-  </script>
+async function sendIA(){
+  if(!modelLoaded){ alert('O chat ainda está carregando, aguarde...'); return; }
+  const input = document.getElementById('chatIAinput');
+  const text = input.value.trim();
+  if(!text) return;
+  appendIA('Você', text);
+  chatHistory.push(`Usuário: ${text}`);
+  if(chatHistory.length>5) chatHistory.shift();
+  input.value='';
+  
+  appendIA('MentalizaBot','digitando...',true);
+
+  const prompt = `Você é um assistente acolhedor e educativo, nunca faz diagnóstico. Sempre redireciona para ajuda em crise.\n${chatHistory.join('\n')}\nMentalizaBot:`;
+
+  const output = await generator(prompt, { max_length:80 });
+  document.getElementById('chatIAlog').lastChild.remove(); // remove "digitando..."
+  const answer = output[0].generated_text.replace(prompt,'').trim();
+  appendIA('MentalizaBot',answer);
+  chatHistory.push(`MentalizaBot: ${answer}`);
+  if(chatHistory.length>5) chatHistory.shift();
+}
+
+function quickQuestion(text){
+  document.getElementById('chatIAinput').value=text;
+  sendIA();
+}
+</script>
 
 </body>
 </html>
+
 
