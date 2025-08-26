@@ -3,155 +3,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentaliza - Chat IA Avançado</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
-
+  <title>Mentaliza - Apoio Emocional</title>
   <style>
-    body { font-family: 'Open Sans', sans-serif; margin:0; padding:0; background:#F0F8FF; color:#333; }
-    header { background: linear-gradient(90deg,#A7C7E7,#A8E6CF); color:white; padding:25px; text-align:center; }
-    header h1 { font-family:'Merriweather', serif; font-size:2.8em; margin:0; }
-    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
-    nav a:hover { text-decoration:underline; }
-    section { padding:40px 20px; margin:20px auto; border-radius:15px; max-width:900px; box-shadow:0 4px 8px rgba(0,0,0,0.1); background:#FFFFFF; }
-    h2 { font-family:'Merriweather', serif; font-size:2em; margin-bottom:20px; }
-    #chatIAlog { height:250px; overflow-y:auto; padding:10px; border:1px solid #ccc; border-radius:8px; background:#f7f7f7; margin-bottom:10px; }
-    input { padding:10px; border-radius:8px; border:1px solid #ccc; width:70%; margin-right:10px; }
-    button { padding:10px 16px; border:none; border-radius:8px; background-color:#4CAF50; color:white; cursor:pointer; font-weight:bold; transition:0.2s; }
-    button:hover { background-color:#45a049; transform:scale(1.05); }
-    .cards { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-    .card { flex:1 1 220px; background:linear-gradient(135deg,#A8E6CF,#E1BEE7); padding:15px; border-radius:12px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1); font-weight:bold; transition:0.3s; cursor:pointer; }
-    .card:hover { transform:translateY(-5px); }
-    iframe { width:100%; height:280px; border-radius:10px; margin-top:10px; }
-    .alert { background:#FFEB3B; padding:15px; border-radius:8px; margin-top:20px; font-weight:bold; text-align:center; }
-    footer { background:#A7C7E7; color:white; text-align:center; padding:15px; margin-top:40px; }
-    .typing { font-style: italic; color: #777; margin-bottom:6px; }
-    .fadeIn { animation: fadeIn 0.5s ease forwards; opacity:0; }
-    @keyframes fadeIn { to { opacity:1; } }
-    @media(max-width:768px){.cards{flex-direction:column;align-items:center;} input{width:100%;margin-bottom:10px;}}
+    /* Estilos gerais */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f7fc;
+      color: #333;
+    }
+    header {
+      background: #4caf50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      margin: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 15px;
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    .video iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
+    }
+    .feedback-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .feedback-form input, .feedback-form textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .feedback-form button {
+      background: #4caf50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .feedback-form button:hover {
+      background: #45a049;
+    }
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+    footer a {
+      color: #4caf50;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Mentaliza 💚</h1>
-  <nav>
-    <a href="#chatIA">Chat IA</a>
-    <a href="#tecnicas">Técnicas</a>
-    <a href="#videos">Vídeos</a>
-  </nav>
+  <h1>Mentaliza</h1>
+  <p>Seu espaço de acolhimento emocional</p>
 </header>
 
-<section class="hero">
-  <h2>Bem-vindo ao Mentaliza</h2>
-  <p>Converse com nosso chatbot IA avançado, veja técnicas rápidas e vídeos educativos.</p>
-  <a href="#chatIA"><button>Começar Chat IA</button></a>
-</section>
-
-<section id="chatIA">
-  <h2>🤖 Chat IA</h2>
-  <div id="chatIAlog"></div>
-  <input id="chatIAinput" placeholder="Escreva aqui...">
-  <button onclick="sendIA()">Enviar</button>
-  <div style="margin-top:10px;">
-    <button onclick="quickQuestion('Estou estressado')">Estou estressado</button>
-    <button onclick="quickQuestion('Quero melhorar meu foco')">Melhorar foco</button>
-    <button onclick="quickQuestion('Preciso dormir melhor')">Sono melhor</button>
-    <button onclick="quickQuestion('Preciso de ajuda agora')">Ajuda imediata</button>
-  </div>
-</section>
-
-<section id="tecnicas">
-  <h2>⚡ Técnicas Rápidas</h2>
-  <div class="cards">
-    <div class="card" onclick="alert('Respire contando: inspire 4s, segure 7s, expire 8s.')">Respiração 4-7-8</div>
-    <div class="card" onclick="alert('Alongue braços, pescoço e costas por 5 minutos.')">Alongamento de 5 min</div>
-    <div class="card" onclick="alert('Faça pausa de 1-2 minutos, respire e relaxe.')">Pausa consciente</div>
-    <div class="card" onclick="alert('Anote pensamentos e sentimentos rapidamente.')">Anotação de pensamentos</div>
-    <div class="card" onclick="alert('Faça mini meditação guiada de 3 minutos.')">Mini meditação guiada</div>
-  </div>
-</section>
-
-<section id="videos">
-  <h2>🎥 Vídeos Recomendados</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Meditação Guiada Iniciantes</h3>
-      <iframe src="https://www.youtube.com/embed/1ZYbU82GVz4" allowfullscreen></iframe>
-    </div>
-    <div class="card">
-      <h3>Respiração para Redução de Estresse</h3>
-      <iframe src="https://www.youtube.com/embed/SEfs5TJZ2J4" allowfullscreen></iframe>
-    </div>
-    <div class="card">
-      <h3>Como Lidar com a Ansiedade</h3>
-      <iframe src="https://www.youtube.com/embed/0V9tQ8J7eYg" allowfullscreen></iframe>
+<section>
+  <div class="card">
+    <h3>Chat com a IA</h3>
+    <p>Converse com nossa IA acolhedora e empática. Ela está aqui para ouvir e apoiar você.</p>
+    <div id="chat-container">
+      <textarea id="user-input" rows="4" placeholder="Digite sua mensagem..."></textarea>
+      <button id="send-btn">Enviar</button>
+      <div id="chat-output"></div>
     </div>
   </div>
 </section>
 
-<section class="alert">
-  Este site oferece informações para apoio emocional. Não substitui acompanhamento profissional. Em caso de crise, ligue 188 (CVV - Brasil).
+<section>
+  <div class="card">
+    <h3>Técnicas Rápidas</h3>
+    <div class="technique">
+      <h4>Meditação Guiada</h4>
+      <p>Clique para aprender uma técnica de meditação simples e eficaz.</p>
+      <div class="details">
+        <p>Encontre um lugar tranquilo, feche os olhos e concentre-se na sua respiração...</p>
+      </div>
+    </div>
+    <div class="technique">
+      <h4>Controle da Ansiedade</h4>
+      <p>Clique para aprender a controlar a ansiedade através da respiração.</p>
+      <div class="details">
+        <p>Respire profundamente pelo nariz, segure por 4 segundos e expire lentamente...</p>
+      </div>
+    </div>
+    <div class="technique">
+      <h4>Abraço de Borboleta</h4>
+      <p>Clique para aprender a técnica do abraço de borboleta.</p>
+      <div class="details">
+        <p>Crie um "X" com os braços e bata suavemente nas mãos...</p>
+      </div>
+    </div>
+    <div class="technique">
+      <h4>Alongamento</h4>
+      <p>Clique para aprender um alongamento simples para relaxamento.</p>
+      <div class="details">
+        <p>Levante os braços acima da cabeça, estique-se para cima e respire profundamente...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h3>Vídeos Terapêuticos</h3>
+    <div class="video">
+      <h4>Meditação Guiada</h4>
+      <iframe src="https://www.youtube.com/embed/pv-aymg97JM" allowfullscreen></iframe>
+    </div>
+    <div class="video">
+      <h4>Controle da Ansiedade</h4>
+      <iframe src="https://www.youtube.com/embed/B2O6-EWJLJA" allowfullscreen></iframe>
+    </div>
+    <div class="video">
+      <h4>Abraço de Borboleta</h4>
+      <iframe src="https://www.youtube.com/embed/wMzQAPcvyWw" allowfullscreen></iframe>
+    </div>
+    <div class="video">
+      <h4>Alongamento</h4>
+      <iframe src="https://www.youtube.com/embed/0R7OC4N5oD4" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h3>Feedback</h3>
+    <p>Gostou do nosso site? Deixe seu feedback para melhorarmos sempre.</p>
+    <form class="feedback-form">
+      <input type="text" placeholder="Seu nome" required>
+      <textarea placeholder="Sua mensagem" required></textarea>
+      <button type="submit">Enviar Feedback</button>
+    </form>
+  </div>
 </section>
 
 <footer>
-  <p>&copy; 2025 Mentaliza - Todos os direitos reservados</p>
+  <p>O Mentaliza é um serviço <strong>educativo e preventivo</strong>. Ele <strong>não substitui</strong> acompanhamento psicológico ou psiquiátrico.</p>
+  <p><a href="https://www.cvv.org.br/188/">Se você estiver em risco ou em crise, ligue 188 (CVV – Brasil, 24h)</a> ou procure o SAMU/UPA mais próxima.</p>
 </footer>
 
-<script type="module">
-import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers/dist/transformers.min.js';
+<script>
+  // Função para alternar a exibição das técnicas rápidas
+  document.querySelectorAll('.technique').forEach(item => {
+    item.addEventListener('click', () => {
+      const details = item.querySelector('.details');
+      details.style.display = details.style.display === 'block' ? 'none' : 'block';
+    });
+  });
 
-let generator;
-let modelLoaded = false;
-let chatHistory = []; // últimas 5 mensagens
-
-async function loadModel(){
-  generator = await pipeline('text-generation', 'Xenova/gpt2', { quantized:true });
-  modelLoaded = true;
-  appendIA('Sistema','Olá! Eu sou o MentalizaBot IA. Posso oferecer dicas educativas e acolhedoras sobre bem-estar. Em risco, ligue 188.');
-}
-loadModel();
-
-function appendIA(sender, text, typing=false){
-  const log = document.getElementById('chatIAlog');
-  const msg = document.createElement('div');
-  msg.className = 'fadeIn';
-  msg.style.padding='6px';
-  msg.style.marginBottom='6px';
-  msg.style.borderRadius='6px';
-  msg.style.background = sender==='Você' ? '#e0f7fa' : '#fff';
-  msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
-  log.appendChild(msg);
-  log.scrollTop = log.scrollHeight;
-}
-
-async function sendIA(){
-  if(!modelLoaded){ alert('O chat ainda está carregando, aguarde...'); return; }
-  const input = document.getElementById('chatIAinput');
-  const text = input.value.trim();
-  if(!text) return;
-  appendIA('Você', text);
-  chatHistory.push(`Usuário: ${text}`);
-  if(chatHistory.length>5) chatHistory.shift();
-  input.value='';
-  
-  appendIA('MentalizaBot','digitando...',true);
-
-  const prompt = `Você é um assistente acolhedor e educativo, nunca faz diagnóstico. Sempre redireciona para ajuda em crise.\n${chatHistory.join('\n')}\nMentalizaBot:`;
-
-  const output = await generator(prompt, { max_length:80 });
-  document.getElementById('chatIAlog').lastChild.remove(); // remove "digitando..."
-  const answer = output[0].generated_text.replace(prompt,'').trim();
-  appendIA('MentalizaBot',answer);
-  chatHistory.push(`MentalizaBot: ${answer}`);
-  if(chatHistory.length>5) chatHistory.shift();
-}
-
-function quickQuestion(text){
-  document.getElementById('chatIAinput').value=text;
-  sendIA();
-}
+  // Função para enviar mensagem ao chatbot
+  document.getElementById('send-btn').addEventListener('click', () => {
+    const userInput = document.getElementById('user-input').value;
+    if (userInput.trim()) {
+      document.getElementById('chat-output').innerHTML += `<p><strong>Você:</strong> ${userInput}</p>`;
+      document.getElementById('user-input').value = '';
+      // Chamada à API do chatbot (substitua com a implementação real)
+      document.getElementById('chat-output').innerHTML += `<p><strong>IA:</strong> Estou aqui para ouvir você. Como posso ajudar?</p>`;
+    }
+  });
 </script>
 
 </body>
