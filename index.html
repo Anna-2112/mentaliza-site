@@ -1,78 +1,146 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentaliza - Apoio Emocional</title>
-  <style>
-    /* Estilos gerais */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f7fc;
-      color: #333;
-    }
-    header {
-      background: #4caf50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    section {
-      margin: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      padding: 15px;
-    }
-    .card h3 {
-      margin-top: 0;
-    }
-    .video iframe {
-      width: 100%;
-      height: 315px;
-      border: none;
-      border-radius: 8px;
-    }
-    .feedback-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .feedback-form input, .feedback-form textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .feedback-form button {
-      background: #4caf50;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .feedback-form button:hover {
-      background: #45a049;
-    }
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
-    footer a {
-      color: #4caf50;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentaliza - Apoio Emocional</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+<script src="https://js.puter.com/v2/"></script>
+<style>
+  /* Estilos gerais */
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8f4f9; /* lavanda clara */
+    color: #333;
+  }
+  header {
+    background: #81c784; /* verde suave */
+    color: white;
+    text-align: center;
+    padding: 25px;
+    font-family: 'Pacifico', cursive;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+  header p {
+    margin: 5px 0 0 0;
+    font-size: 1.2em;
+  }
+  section {
+    margin: 30px 10%;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+  }
+  .card h3 {
+    margin-top: 0;
+    color: #4a148c; /* lavanda escura */
+  }
+  .technique {
+    margin: 15px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .technique h4 {
+    margin: 0;
+  }
+  .details {
+    display: none;
+    margin-left: 30px;
+    color: #555;
+  }
+  .video iframe {
+    width: 100%;
+    height: 315px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+  }
+  #chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #user-input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
+  }
+  #send-btn {
+    background: #81c784;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 120px;
+  }
+  #send-btn:hover {
+    background: #66bb6a;
+  }
+  #chat-output p {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  #chat-output p.user {
+    background: #dcedc8;
+    align-self: flex-end;
+  }
+  #chat-output p.ai {
+    background: #e1bee7;
+    align-self: flex-start;
+  }
+  footer {
+    background: #4a148c;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+  }
+  footer a {
+    color: #81c784;
+    text-decoration: none;
+  }
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .feedback-form input, .feedback-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  .feedback-form button {
+    background: #81c784;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150px;
+  }
+  .feedback-form button:hover {
+    background: #66bb6a;
+  }
+</style>
 </head>
 <body>
 
@@ -83,8 +151,8 @@
 
 <section>
   <div class="card">
-    <h3>Chat com a IA</h3>
-    <p>Converse com nossa IA acolhedora e empática. Ela está aqui para ouvir e apoiar você.</p>
+    <h3>Chat com a IA 🤖</h3>
+    <p>Converse com nossa IA acolhedora e empática. Ela está aqui para ouvir você.</p>
     <div id="chat-container">
       <textarea id="user-input" rows="4" placeholder="Digite sua mensagem..."></textarea>
       <button id="send-btn">Enviar</button>
@@ -95,41 +163,29 @@
 
 <section>
   <div class="card">
-    <h3>Técnicas Rápidas</h3>
+    <h3>Técnicas Rápidas ✨</h3>
     <div class="technique">
-      <h4>Meditação Guiada</h4>
-      <p>Clique para aprender uma técnica de meditação simples e eficaz.</p>
-      <div class="details">
-        <p>Encontre um lugar tranquilo, feche os olhos e concentre-se na sua respiração...</p>
-      </div>
+      <span>🧘‍♂️</span><h4>Meditação Guiada</h4>
     </div>
+    <div class="details">Encontre um lugar tranquilo, feche os olhos, respire profundamente e sinta a calma preenchendo seu corpo...</div>
     <div class="technique">
-      <h4>Controle da Ansiedade</h4>
-      <p>Clique para aprender a controlar a ansiedade através da respiração.</p>
-      <div class="details">
-        <p>Respire profundamente pelo nariz, segure por 4 segundos e expire lentamente...</p>
-      </div>
+      <span>💨</span><h4>Controle da Ansiedade</h4>
     </div>
+    <div class="details">Respire profundamente pelo nariz, segure 4 segundos e expire lentamente. Repita 5 vezes e sinta o relaxamento...</div>
     <div class="technique">
-      <h4>Abraço de Borboleta</h4>
-      <p>Clique para aprender a técnica do abraço de borboleta.</p>
-      <div class="details">
-        <p>Crie um "X" com os braços e bata suavemente nas mãos...</p>
-      </div>
+      <span>🦋</span><h4>Abraço de Borboleta</h4>
     </div>
+    <div class="details">Cruze os braços em X no peito e bata suavemente nas mãos, sentindo conforto e acolhimento...</div>
     <div class="technique">
-      <h4>Alongamento</h4>
-      <p>Clique para aprender um alongamento simples para relaxamento.</p>
-      <div class="details">
-        <p>Levante os braços acima da cabeça, estique-se para cima e respire profundamente...</p>
-      </div>
+      <span>🤸‍♀️</span><h4>Alongamento</h4>
     </div>
+    <div class="details">Estique braços acima da cabeça, incline o tronco suavemente e respire fundo, liberando tensão...</div>
   </div>
 </section>
 
 <section>
   <div class="card">
-    <h3>Vídeos Terapêuticos</h3>
+    <h3>Vídeos Terapêuticos 🎬</h3>
     <div class="video">
       <h4>Meditação Guiada</h4>
       <iframe src="https://www.youtube.com/embed/pv-aymg97JM" allowfullscreen></iframe>
@@ -151,8 +207,7 @@
 
 <section>
   <div class="card">
-    <h3>Feedback</h3>
-    <p>Gostou do nosso site? Deixe seu feedback para melhorarmos sempre.</p>
+    <h3>Feedback 📬</h3>
     <form class="feedback-form">
       <input type="text" placeholder="Seu nome" required>
       <textarea placeholder="Sua mensagem" required></textarea>
@@ -166,26 +221,42 @@
   <p><a href="https://www.cvv.org.br/188/">Se você estiver em risco ou em crise, ligue 188 (CVV – Brasil, 24h)</a> ou procure o SAMU/UPA mais próxima.</p>
 </footer>
 
-<script src="https://js.puter.com/v2/"></script>
 <script>
-  // Função para alternar a exibição das técnicas rápidas
-  document.querySelectorAll('.technique').forEach(item => {
+  // Técnicas rápidas expansíveis
+  document.querySelectorAll('.technique').forEach((item, i) => {
     item.addEventListener('click', () => {
-      const details = item.querySelector('.details');
+      const details = document.querySelectorAll('.details')[i];
       details.style.display = details.style.display === 'block' ? 'none' : 'block';
     });
   });
 
-  // Função para enviar mensagem ao chatbot
+  // Chat IA usando API externa Puter.js
   document.getElementById('send-btn').addEventListener('click', () => {
     const userInput = document.getElementById('user-input').value;
     if (userInput.trim()) {
-      document.getElementById('chat-output').innerHTML += `<p><strong>Você:</strong> ${userInput}</p>`;
+      const chatOutput = document.getElementById('chat-output');
+      chatOutput.innerHTML += `<p class="user"><strong>Você:</strong> ${userInput}</p>`;
       document.getElementById('user-input').value = '';
-      // Chamada à API do chatbot (substitua com a implementação real)
+
+      // Indicador de digitação
+      const typing = document.createElement('p');
+      typing.id = 'typing';
+      typing.className = 'ai';
+      typing.innerHTML = "<strong>IA:</strong> Mentaliza está digitando...";
+      chatOutput.appendChild(typing);
+      chatOutput.scrollTop = chatOutput.scrollHeight;
+
+      // Chamada à API externa
       puter.ai.chat(userInput, { model: 'gpt-4.1-nano' })
         .then(response => {
-          document.getElementById('chat-output').innerHTML += `<p><strong>IA:</strong> ${response}</p>`;
+          typing.remove();
+          chatOutput.innerHTML += `<p class="ai"><strong>IA:</strong> ${response}</p>`;
+          chatOutput.scrollTop = chatOutput.scrollHeight;
+        })
+        .catch(err => {
+          typing.remove();
+          chatOutput.innerHTML += `<p class="ai"><strong>IA:</strong> Ocorreu um erro. Tente novamente.</p>`;
+          console.error(err);
         });
     }
   });
