@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mentaliza - Bem-Estar Corporativo</title>
+<title>Conexão Mente - Bem-Estar Corporativo</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://js.puter.com/v2/"></script>
 <style>
-    /* 1. Uso de box-sizing e variáveis CSS */
     * {
         box-sizing: border-box;
     }
 
     :root {
-        --cor-principal: #6c5ce7; /* Roxo profundo */
-        --cor-secundaria: #9575cd; /* Roxo claro */
-        --cor-fundo: #f8f7ff; /* Lavanda suave */
-        --cor-texto: #2d3436; /* Cinza grafite */
+        --cor-principal: #6c5ce7;
+        --cor-secundaria: #9575cd;
+        --cor-fundo: #f8f7ff;
+        --cor-texto: #2d3436;
         --cor-card-fundo: #ffffff;
         --cor-sombra: rgba(0,0,0,0.1);
     }
@@ -39,7 +38,7 @@
     header h1 {
         margin: 0;
         font-size: 2.8em;
-        font-family: 'Merriweather', serif; /* 2. Fonte mais séria para o título */
+        font-family: 'Merriweather', serif;
     }
     header p {
         margin: 5px 0 0 0;
@@ -68,7 +67,6 @@
         padding-bottom: 10px;
     }
 
-    /* 3. Layout de grade para as técnicas */
     .techniques-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -102,7 +100,6 @@
         right: 20px;
     }
     
-    /* 4. Layout de grade para os vídeos */
     .videos-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -120,8 +117,51 @@
     }
     .video-item iframe {
         width: 100%;
-        height: 150px; /* 5. Altura reduzida para os vídeos */
+        height: 150px;
         border: none;
+    }
+
+    /* Estilos para a nova área de Artigos */
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+    .article-item {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+        transition: transform 0.2s;
+    }
+    .article-item:hover {
+        transform: translateY(-3px);
+    }
+    .article-item h4 {
+        margin-top: 0;
+        color: var(--cor-principal);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2em;
+    }
+    .article-item p {
+        font-size: 0.9em;
+        color: var(--cor-cinza-claro);
+        line-height: 1.6;
+    }
+    .article-item a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 15px;
+        background: var(--cor-secundaria);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+    .article-item a:hover {
+        background: var(--cor-principal);
     }
     
     #chat-container {
@@ -222,7 +262,7 @@
 <body>
 
 <header>
-    <h1>Mentaliza</h1>
+    <h1>Conexão Mente</h1>
     <p>Seu espaço de acolhimento emocional e bem-estar</p>
 </header>
 
@@ -261,7 +301,36 @@
             <div class="technique-item">
                 <span class="icon">🤸‍♀️</span>
                 <h4>Alongamento de Pausa</h4>
-                <p>Levante-se da cadeira, estique os braços acima da cabeça e sinta o alongamento. Incline o tronco suavemente para um lado e depois para o outro. Gire o pescoço de um lado para o outro. Pequenos movimentos podem liberar a tensão física e mental.</p>
+                <p>Levante-se da cadeira, estique os braços acima da cabeça e incline o tronco. Pequenos movimentos podem liberar a tensão física e mental.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <h3>Artigos e Insights 📚</h3>
+        <p>Navegue por nosso acervo de artigos sobre bem-estar mental, produtividade e equilíbrio profissional.</p>
+        <div class="articles-grid">
+            <div class="article-item">
+                <h4>O Impacto do Burnout e Como Preveni-lo</h4>
+                <p>Entenda os sinais do esgotamento profissional e descubra estratégias eficazes para manter a sua saúde mental no ambiente de trabalho.</p>
+                <a href="#">Ler mais</a>
+            </div>
+            <div class="article-item">
+                <h4>Gerenciando o Estresse no Ambiente Corporativo</h4>
+                <p>Aprenda a identificar as fontes de estresse e aplique técnicas práticas para manter a calma e o foco, mesmo em momentos de alta pressão.</p>
+                <a href="#">Ler mais</a>
+            </div>
+            <div class="article-item">
+                <h4>A Importância das Pausas para o Foco</h4>
+                <p>Descubra como pequenas pausas ao longo do dia de trabalho podem aumentar sua produtividade, criatividade e bem-estar geral.</p>
+                <a href="#">Ler mais</a>
+            </div>
+            <div class="article-item">
+                <h4>Equilíbrio entre Vida Profissional e Pessoal</h4>
+                <p>Conheça dicas e estratégias para criar uma rotina mais saudável, estabelecendo limites e desfrutando de mais tempo com qualidade.</p>
+                <a href="#">Ler mais</a>
             </div>
         </div>
     </div>
@@ -295,8 +364,7 @@
 <section>
     <div class="card">
         <h3>Feedback e Sugestões 📬</h3>
-        <p>Sua opinião é fundamental para aprimorarmos o "Mentaliza" e garantir que ele atenda às suas necessidades. Este canal é anônimo.
-        </p>
+        <p>Sua opinião é fundamental para aprimorarmos o "Conexão Mente" e garantir que ele atenda às suas necessidades. Este canal é anônimo.</p>
         <form class="feedback-form">
             <label for="mensagem" style="display: none;">Sua mensagem</label>
             <textarea id="mensagem" placeholder="Sua mensagem" required></textarea>
@@ -306,7 +374,7 @@
 </section>
 
 <footer>
-    <p>O "Mentaliza" é uma ferramenta de apoio. Ele <strong>não substitui</strong> o diagnóstico ou acompanhamento de um profissional de saúde.</p>
+    <p>O "Conexão Mente" é uma ferramenta de apoio. Ele <strong>não substitui</strong> o diagnóstico ou acompanhamento de um profissional de saúde.</p>
     <p>
         <a href="https://www.cvv.org.br/188/" target="_blank">Se você estiver em risco ou em crise, ligue 188 (CVV – Brasil, 24h)</a> ou procure o SAMU/UPA mais próxima.</p>
 </footer>
@@ -318,7 +386,6 @@
         const sendBtn = document.getElementById('send-btn');
         const feedbackForm = document.querySelector('.feedback-form');
 
-        // 6. Lista de palavras de risco ampliada
         const dangerWords = [
             'morte', 'morrer', 'morrendo', 'suicidio', 'suicidar', 'suicidando',
             'acabar com a vida', 'desesperado', 'sem saida', 'fim', 'nao aguento mais',
@@ -380,7 +447,6 @@
             }
         });
 
-        // Lógica para as técnicas, agora sem expansão
         document.querySelectorAll('.technique-item').forEach((item) => {
             item.addEventListener('click', () => {
                 item.style.backgroundColor = '#d1c4e9';
@@ -398,4 +464,3 @@
 
 </body>
 </html>
-
