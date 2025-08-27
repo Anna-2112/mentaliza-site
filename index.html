@@ -37,8 +37,9 @@
     }
     header h1 {
         margin: 0;
-        font-size: 2.8em;
+        font-size: 3.5em; /* Título mais em destaque */
         font-family: 'Merriweather', serif;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
     header p {
         margin: 5px 0 0 0;
@@ -359,12 +360,12 @@
                 <iframe src="https://www.youtube.com/embed/B2O6-EWJLJA" allowfullscreen></iframe>
             </div>
             <div class="video-item">
-                <h4>Abraço de Borboleta</h4>
-                <iframe src="https://www.youtube.com/embed/wMzQAPcvyWw" allowfullscreen></iframe>
+                <h4>Yoga para relaxar depois do trabalho</h4>
+                <iframe src="https://www.youtube.com/embed/BozNDfOjXbs" allowfullscreen></iframe>
             </div>
             <div class="video-item">
-                <h4>Alongamento</h4>
-                <iframe src="https://www.youtube.com/embed/0R7OC4N5oD4" allowfullscreen></iframe>
+                <h4>Meditação para Descansar a Mente</h4>
+                <iframe src="https://www.youtube.com/embed/seZf9zYbPyE" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -374,6 +375,9 @@
     <div class="card">
         <h3>Feedback e Sugestões 📬</h3>
         <p>Sua opinião é fundamental para aprimorarmos o "Mentaliza" e garantir que ele atenda às suas necessidades. Este canal é anônimo.</p>
+        <p style="font-size: 0.8em; color: gray;">
+            *Atenção: Para manter seu anonimato e a segurança dos dados, a funcionalidade de envio de e-mail requer um servidor web para processar o feedback de forma segura. O código atual apenas exibe uma mensagem de confirmação. Para implementar o envio, você precisará configurar um backend dedicado.
+        </p>
         <form class="feedback-form">
             <label for="mensagem" style="display: none;">Sua mensagem</label>
             <textarea id="mensagem" placeholder="Sua mensagem" required></textarea>
@@ -402,8 +406,14 @@
             'nao tenho mais forcas', 'quero sumir', 'depressao', 'depressão', 'depressivo',
             'deprimido', 'ansiedade severa', 'crise de ansiedade', 'ataque de panico',
             'nao vejo sentido', 'sem esperanca', 'sem esperança', 'pensamentos ruins',
-            'cansado de viver', 'ajuda', 'me ajude', 'solidao', 'solidão'
+            'cansado de viver', 'ajuda', 'me ajude', 'solidao', 'solidão', 'sozinho'
         ];
+        
+        // Adiciona a mensagem de boas-vindas com a IA
+        function showWelcomeMessage() {
+            const welcomeMessage = "Olá! Seja bem-vindo(a) ao Mentaliza. Estou aqui para te ouvir e te dar apoio de forma anônima. Lembre-se, não sou um profissional de saúde e não posso dar diagnósticos, mas posso te ajudar a encontrar conselhos e um espaço seguro para conversar. Como posso te ajudar hoje?";
+            createAndAppendMessage(welcomeMessage, 'ai');
+        }
 
         function createAndAppendMessage(text, type) {
             const p = document.createElement('p');
@@ -443,7 +453,9 @@
             try {
                 const response = await puter.ai.chat(userMessage, { model: 'gpt-4.1-nano' });
                 typing.remove();
-                createAndAppendMessage(response, 'ai');
+                // Adiciona um aviso no final da resposta da IA
+                const aiResponse = `${response} \n\n (Lembre-se: não sou um profissional de saúde e não posso fazer diagnósticos. Se precisar, procure um especialista.)`;
+                createAndAppendMessage(aiResponse, 'ai');
             } catch (err) {
                 typing.remove();
                 createAndAppendMessage("Ocorreu um erro. Tente novamente.", 'ai');
@@ -471,6 +483,9 @@
             alert("Obrigado pelo seu feedback! (Esta é uma função de exemplo)");
             feedbackForm.reset();
         });
+
+        // Chama a função para exibir a mensagem de boas-vindas ao carregar a página
+        showWelcomeMessage();
     });
 </script>
 
