@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conexão Mente - Bem-Estar Corporativo</title>
+<title>Mentaliza - Bem-Estar Corporativo</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://js.puter.com/v2/"></script>
 <style>
@@ -121,7 +121,6 @@
         border: none;
     }
 
-    /* Estilos para a nova área de Artigos */
     .articles-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -262,7 +261,7 @@
 <body>
 
 <header>
-    <h1>Conexão Mente</h1>
+    <h1>Mentaliza</h1>
     <p>Seu espaço de acolhimento emocional e bem-estar</p>
 </header>
 
@@ -315,22 +314,22 @@
             <div class="article-item">
                 <h4>O Impacto do Burnout e Como Preveni-lo</h4>
                 <p>Entenda os sinais do esgotamento profissional e descubra estratégias eficazes para manter a sua saúde mental no ambiente de trabalho.</p>
-                <a href="#">Ler mais</a>
+                <a href="https://www.gov.br/saude/pt-br/assuntos/saude-e-prevencao/saude-mental/saude-mental-e-burnout-o-que-e-o-que-fazer-e-como-prevenir" target="_blank">Ler mais</a>
             </div>
             <div class="article-item">
                 <h4>Gerenciando o Estresse no Ambiente Corporativo</h4>
                 <p>Aprenda a identificar as fontes de estresse e aplique técnicas práticas para manter a calma e o foco, mesmo em momentos de alta pressão.</p>
-                <a href="#">Ler mais</a>
+                <a href="https://saude.abril.com.br/mente-e-cerebro/estresse-no-trabalho-a-solucao-pode-estar-na-mente" target="_blank">Ler mais</a>
             </div>
             <div class="article-item">
                 <h4>A Importância das Pausas para o Foco</h4>
                 <p>Descubra como pequenas pausas ao longo do dia de trabalho podem aumentar sua produtividade, criatividade e bem-estar geral.</p>
-                <a href="#">Ler mais</a>
+                <a href="https://exame.com/carreira/a-importancia-das-pausas-para-o-bem-estar-e-a-produtividade/" target="_blank">Ler mais</a>
             </div>
             <div class="article-item">
                 <h4>Equilíbrio entre Vida Profissional e Pessoal</h4>
                 <p>Conheça dicas e estratégias para criar uma rotina mais saudável, estabelecendo limites e desfrutando de mais tempo com qualidade.</p>
-                <a href="#">Ler mais</a>
+                <a href="https://www.vittude.com/blog/equilibrio-entre-vida-pessoal-e-profissional/" target="_blank">Ler mais</a>
             </div>
         </div>
     </div>
@@ -364,7 +363,7 @@
 <section>
     <div class="card">
         <h3>Feedback e Sugestões 📬</h3>
-        <p>Sua opinião é fundamental para aprimorarmos o "Conexão Mente" e garantir que ele atenda às suas necessidades. Este canal é anônimo.</p>
+        <p>Sua opinião é fundamental para aprimorarmos o "Mentaliza" e garantir que ele atenda às suas necessidades. Este canal é anônimo.</p>
         <form class="feedback-form">
             <label for="mensagem" style="display: none;">Sua mensagem</label>
             <textarea id="mensagem" placeholder="Sua mensagem" required></textarea>
@@ -374,7 +373,7 @@
 </section>
 
 <footer>
-    <p>O "Conexão Mente" é uma ferramenta de apoio. Ele <strong>não substitui</strong> o diagnóstico ou acompanhamento de um profissional de saúde.</p>
+    <p>O "Mentaliza" é uma ferramenta de apoio. Ele <strong>não substitui</strong> o diagnóstico ou acompanhamento de um profissional de saúde.</p>
     <p>
         <a href="https://www.cvv.org.br/188/" target="_blank">Se você estiver em risco ou em crise, ligue 188 (CVV – Brasil, 24h)</a> ou procure o SAMU/UPA mais próxima.</p>
 </footer>
@@ -386,11 +385,15 @@
         const sendBtn = document.getElementById('send-btn');
         const feedbackForm = document.querySelector('.feedback-form');
 
+        // Repertório da IA com mais palavras e variações
         const dangerWords = [
             'morte', 'morrer', 'morrendo', 'suicidio', 'suicidar', 'suicidando',
             'acabar com a vida', 'desesperado', 'sem saida', 'fim', 'nao aguento mais',
             'tirar a propria vida', 'me matar', 'me machucar', 'me ferir',
-            'nao tenho mais forcas', 'quero sumir'
+            'nao tenho mais forcas', 'quero sumir', 'depressao', 'depressão', 'depressivo',
+            'deprimido', 'ansiedade severa', 'crise de ansiedade', 'ataque de panico',
+            'nao vejo sentido', 'sem esperanca', 'sem esperança', 'pensamentos ruins',
+            'cansado de viver', 'ajuda', 'me ajude', 'solidao', 'solidão'
         ];
 
         function createAndAppendMessage(text, type) {
@@ -411,7 +414,7 @@
             const typing = document.createElement('p');
             typing.id = 'typing';
             typing.className = 'ai';
-            typing.textContent = "IA: Conexão Mente está digitando";
+            typing.textContent = "IA: Mentaliza está digitando";
             chatOutput.appendChild(typing);
             chatOutput.scrollTop = chatOutput.scrollHeight;
 
